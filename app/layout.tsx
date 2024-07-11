@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body style={{ cursor: "url('/cursor.png'), auto" }}>
         {children}
         <Header />
       </body>

@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 
-const HeroStudents = () => {
+const HeroStudentsGalary = () => {
   const controls = useAnimation();
   const containerRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -41,7 +41,7 @@ const HeroStudents = () => {
       zIndex: 3 - i,
     }),
     visible: (i: number) => ({
-      x: i * 100,
+      x: i * 60,
       y: 0,
       transition: {
         type: "spring",
@@ -56,6 +56,7 @@ const HeroStudents = () => {
     "/Home/Students/1.png",
     "/Home/Students/1.png",
     "/Home/Students/1.png",
+    "/Home/Students/1.png",
   ];
 
   return (
@@ -63,7 +64,7 @@ const HeroStudents = () => {
       ref={containerRef}
       className="h-screen bg-orange-600/95 flex justify-center items-center overflow-hidden"
     >
-      <div className="relative w-[60vh] h-[60vh]">
+      <div className="relative w-[60vh] h-[60vh] -left-16">
         {images.map((src, index) => (
           <motion.img
             key={src}
@@ -80,4 +81,4 @@ const HeroStudents = () => {
   );
 };
 
-export default HeroStudents;
+export default HeroStudentsGalary;
