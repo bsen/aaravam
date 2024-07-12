@@ -23,7 +23,7 @@ const HeroScroll = () => {
   return (
     <div
       ref={containerRef}
-      className="h-screen overflow-hidden bg-orange-600/95 flex items-center"
+      className="h-screen overflow-hidden bg-orange-600 flex items-center"
     >
       <motion.div style={{ x: xPos }} className="flex gap-4">
         {images.map((src, index) => (

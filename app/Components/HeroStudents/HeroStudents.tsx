@@ -62,7 +62,7 @@ const HeroStudentsGalary = () => {
   return (
     <div
       ref={containerRef}
-      className="h-screen bg-orange-600/95 flex justify-center items-center overflow-hidden"
+      className="h-screen bg-orange-600 flex justify-center items-center overflow-hidden"
     >
       <div className="relative w-[60vh] h-[60vh] -left-16">
         {images.map((src, index) => (

@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useRef, useEffect } from "react";
 import Hero from "./Components/Hero/Hero";
 import HeroStudentsGalary from "./Components/HeroStudents/HeroStudents";
 import HeroScroll from "./Components/HeroStudents/HeroScroll";
@@ -7,19 +8,73 @@ import AboutBanner from "./Components/About/AboutBanner";
 import WhatBanner from "./Components/What/WhatBanner";
 import WhatData from "./Components/What/WhatData";
 import ObjectiveBanner from "./Components/Objective/ObjectiveBanner";
-const page = () => {
+
+const Page = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRefs = useRef<Array<HTMLDivElement | null>>([]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+
+      const scrollPosition = containerRef.current.scrollTop;
+      let cumulativeHeight = 0;
+
+      sectionRefs.current.forEach((sectionRef, index) => {
+        if (!sectionRef) return;
+
+        const sectionHeight = sectionRef.offsetHeight;
+
+        if (scrollPosition > cumulativeHeight + sectionHeight / 2) {
+          sectionRef.style.transform = `translateY(${-(
+            scrollPosition -
+            cumulativeHeight -
+            sectionHeight / 2
+          )}px)`;
+        } else {
+          sectionRef.style.transform = "translateY(0)";
+        }
+
+        cumulativeHeight += sectionHeight;
+      });
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, []);
+
   return (
-    <div>
-      <Hero />
-      <HeroStudentsGalary />
-      <HeroScroll />
-      <BannerPartner />
-      <AboutBanner />
-      <WhatBanner />
-      <WhatData />
-      <ObjectiveBanner />
+    <div ref={containerRef} className="h-screen overflow-y-auto scroll-smooth">
+      {[
+        <Hero key="hero" />,
+        <HeroStudentsGalary key="heroStudents" />,
+        <HeroScroll key="heroScroll" />,
+        <BannerPartner key="bannerPartner" />,
+        <AboutBanner key="aboutBanner" />,
+        <WhatBanner key="whatBanner" />,
+        <WhatData key="whatData" />,
+        <ObjectiveBanner key="objectiveBanner" />,
+      ].map((Component, index) => (
+        <div
+          key={index}
+          ref={(el) => {
+            sectionRefs.current[index] = el;
+          }}
+          className="min-h-screen sticky top-0"
+        >
+          {Component}
+        </div>
+      ))}
     </div>
   );
 };
 
-export default page;
+export default Page;
