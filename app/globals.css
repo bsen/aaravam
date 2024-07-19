@@ -18,8 +18,5 @@ body {
   min-height: 100vh;
   overflow-y: auto;
   background-color: black;
-}
-
-body {
-  cursor: url("/cursor.png"), auto;
+  cursor: none;
 }

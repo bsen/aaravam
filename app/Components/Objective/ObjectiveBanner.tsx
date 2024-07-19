@@ -5,7 +5,6 @@ const sections = [
     backgroundColor: "#B686B8",
     content: (
       <div className="flex items-end flex-col">
-        <img src="/cursor.png" className="h-20" alt="Cursor" />
         <div className="text-[8rem] text-white font-semibold">Objectives</div>
       </div>
     ),
@@ -48,7 +47,6 @@ const sections = [
     backgroundColor: "#B686B8",
     content: (
       <div className="flex items-end flex-col">
-        <img src="/cursor.png" className="h-20" alt="Cursor" />
         <div className="text-[6rem] text-center text-white font-semibold">
           We Follow a framework called <br />
           <span style={{ color: "#452E2E" }}>create</span>

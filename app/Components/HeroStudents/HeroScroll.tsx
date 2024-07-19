@@ -18,7 +18,7 @@ const HeroScroll = () => {
     "/Home/Students/1.png",
   ];
 
-  const xPos = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
+  const xPos = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
 
   return (
     <div

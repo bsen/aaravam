@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-const BannerPartner = () => {
+const Partner = () => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -20,7 +20,7 @@ const BannerPartner = () => {
     "/Partners/2.png",
   ];
 
-  const xPos = useTransform(scrollYProgress, [1, 0], ["0%", "-10%"]);
+  const xPos = useTransform(scrollYProgress, [1, 0], ["0%", "-60%"]);
 
   return (
     <div
@@ -47,4 +47,4 @@ const BannerPartner = () => {
   );
 };
 
-export default BannerPartner;
+export default Partner;
