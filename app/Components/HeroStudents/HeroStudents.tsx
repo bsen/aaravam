@@ -1,48 +1,38 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import { motion, useAnimation } from "framer-motion";
+import React from "react";
+import { motion, useAnimation, useInView } from "framer-motion";
 
 const HeroStudentsGalary = () => {
   const controls = useAnimation();
-  const containerRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: false, amount: 0.5 });
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (isVisible) {
+  React.useEffect(() => {
+    if (isInView) {
       controls.start("visible");
+    } else {
+      controls.start("hidden");
     }
-  }, [isVisible, controls]);
+  }, [isInView, controls]);
 
   const imageVariants = {
-    hidden: (i: number) => ({
-      x: i * -20,
-      y: i * -20,
-      zIndex: 3 - i,
-    }),
-    visible: (i: number) => ({
-      x: i * 60,
+    hidden: (i: any) => ({
+      x: 0,
       y: 0,
+      scale: 1,
+      zIndex: 4 - i,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+        delay: i * 0.1,
+      },
+    }),
+    visible: (i: any) => ({
+      x: (i - 1.5) * 240,
+      y: 0,
+      scale: 1,
+      zIndex: 4 - i,
       transition: {
         type: "spring",
         stiffness: 100,
@@ -61,19 +51,24 @@ const HeroStudentsGalary = () => {
 
   return (
     <div
-      ref={containerRef}
-      className="h-screen bg-orange-600 flex justify-center items-center overflow-hidden"
+      ref={ref}
+      className="h-screen -mt-10 bg-orange-600 flex justify-center items-center overflow-hidden"
     >
-      <div className="relative w-[60vh] h-[60vh] -left-16">
+      <div className="relative w-[60vh] h-[60vh]">
         {images.map((src, index) => (
           <motion.img
-            key={src}
+            key={index}
             src={src}
-            className="absolute top-0 left-0 w-full h-full object-contain"
             custom={index}
             initial="hidden"
             animate={controls}
             variants={imageVariants}
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+            }}
           />
         ))}
       </div>

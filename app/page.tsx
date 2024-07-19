@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useEffect } from "react";
-import Hero from "./Components/Hero/Hero";
+import Banner from "./Components/Banner/Banner";
 import HeroStudentsGalary from "./Components/HeroStudents/HeroStudents";
 import HeroScroll from "./Components/HeroStudents/HeroScroll";
 import BannerPartner from "./Components/About/BannerPartner";
@@ -52,28 +52,33 @@ const Page = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="h-screen overflow-y-auto scroll-smooth">
-      {[
-        <Hero key="hero" />,
-        <HeroStudentsGalary key="heroStudents" />,
-        <HeroScroll key="heroScroll" />,
-        <BannerPartner key="bannerPartner" />,
-        <AboutBanner key="aboutBanner" />,
-        <WhatBanner key="whatBanner" />,
-        <WhatData key="whatData" />,
-        <ObjectiveBanner key="objectiveBanner" />,
-      ].map((Component, index) => (
-        <div
-          key={index}
-          ref={(el) => {
-            sectionRefs.current[index] = el;
-          }}
-          className="min-h-screen sticky top-0"
-        >
-          {Component}
-        </div>
-      ))}
-    </div>
+    <>
+      <Banner />,
+      <HeroStudentsGalary />
+      <HeroScroll />
+      <div
+        ref={containerRef}
+        className="h-screen overflow-y-auto scroll-smooth"
+      >
+        {[
+          <BannerPartner key="bannerPartner" />,
+          <AboutBanner key="aboutBanner" />,
+          <WhatBanner key="whatBanner" />,
+          <WhatData key="whatData" />,
+          <ObjectiveBanner key="objectiveBanner" />,
+        ].map((Component, index) => (
+          <div
+            key={index}
+            ref={(el) => {
+              sectionRefs.current[index] = el;
+            }}
+            className="min-h-screen sticky top-0"
+          >
+            {Component}
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

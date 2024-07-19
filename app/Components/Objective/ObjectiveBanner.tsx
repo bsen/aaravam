@@ -56,22 +56,17 @@ const sections = [
       </div>
     ),
   },
+
   {
     backgroundColor: "#452E2E",
     content: (
-      <div className="flex items-center flex-col w-[80%]">
-        <div className="text-[6rem] text-center text-white font-semibold">
-          Choice
-        </div>
-        <div className="text-[2rem] text-center text-white font-semibold">
-          We believe children need to have a choice in how they are learning.
-          When children are agents and a part of their learning then they build
-          an intrinsic motivation towards education which pushes them to becomes
-          life-long learners!
-        </div>
-        <div className="text-orange-600 text-[2rem] mt-20">
-          <span className="px-2.5 mx-1 bg-orange-100 rounded-full">c</span> r e
-          a t e
+      <div className="flex items-center justify-center h-full w-full">
+        <div className="text-[15rem] text-white font-semibold relative">
+          CREATE
+          <span
+            className="absolute inset-0 bg-orange-500 rounded-full"
+            style={{ clipPath: "circle(18% at 10% 50%)" }}
+          ></span>
         </div>
       </div>
     ),
@@ -79,19 +74,13 @@ const sections = [
   {
     backgroundColor: "#FF6B00",
     content: (
-      <div className="flex items-center flex-col w-[80%]">
-        <div className="text-[6rem] text-center text-white font-semibold">
-          Relevance
-        </div>
-        <div className="text-[2rem] text-center text-white font-semibold">
-          Learning needs to stem from what children see around them so that they
-          can make sense of it from different angles rather than just a
-          theoretical one. This is a reason why we make sure the problem
-          statements are always contextual to their environment!
-        </div>
-        <div className="text-white text-[2rem] mt-20">
-          c <span className="px-3 mx-1 bg-purple-400 rounded-full">r</span> e a
-          t e
+      <div className="flex items-center justify-center h-full w-full">
+        <div className="text-[15rem] text-white font-semibold relative">
+          CREATE
+          <span
+            className="absolute inset-0 bg-purple-500 rounded-full"
+            style={{ clipPath: "circle(18% at 25% 50%)" }}
+          ></span>
         </div>
       </div>
     ),
@@ -99,20 +88,13 @@ const sections = [
   {
     backgroundColor: "#452E2E",
     content: (
-      <div className="flex items-center flex-col w-[80%]">
-        <div className="text-[6rem] text-center text-white font-semibold">
-          Explore
-        </div>
-        <div className="text-[2rem] text-center text-white font-semibold">
-          We don't want to spoon-feed information to children, instead we have
-          designed the space in a way where they can explore and discover new
-          topics independently. This will build a strong sense of confidence in
-          them and make them realise that they have the power to make a change
-          in their environment without the constant instruction of an adult.
-        </div>
-        <div className="text-orange-600 text-[2rem] mt-20">
-          c r <span className="px-2.5 mx-1 bg-orange-100 rounded-full">e</span>{" "}
-          a t e
+      <div className="flex items-center justify-center h-full w-full">
+        <div className="text-[15rem] text-white font-semibold relative">
+          CREATE
+          <span
+            className="absolute inset-0 bg-orange-500 rounded-full"
+            style={{ clipPath: "circle(18% at 40% 50%)" }}
+          ></span>
         </div>
       </div>
     ),
@@ -120,19 +102,13 @@ const sections = [
   {
     backgroundColor: "#FF6B00",
     content: (
-      <div className="flex items-center flex-col w-[80%]">
-        <div className="text-[6rem] text-center text-white font-semibold">
-          Act
-        </div>
-        <div className="text-[2rem] text-center text-white font-semibold">
-          Once children are done ideating and exploring, we believe that it is a
-          necessity for children to create and act upon what they have learnt.
-          This will help make learning not only more concrete but give them the
-          power to co-create their learning graph!
-        </div>
-        <div className="text-white text-[2rem] mt-20">
-          c r e<span className="px-3 mx-1 bg-purple-400 rounded-full">a</span> t
-          e
+      <div className="flex items-center justify-center h-full w-full">
+        <div className="text-[15rem] text-white font-semibold relative">
+          CREATE
+          <span
+            className="absolute inset-0 bg-purple-500 rounded-full"
+            style={{ clipPath: "circle(18% at 55% 50%)" }}
+          ></span>
         </div>
       </div>
     ),
@@ -140,20 +116,13 @@ const sections = [
   {
     backgroundColor: "#452E2E",
     content: (
-      <div className="flex items-center flex-col w-[80%]">
-        <div className="text-[6rem] text-center text-white font-semibold">
-          Track
-        </div>
-        <div className="text-[2rem] text-center text-white font-semibold">
-          It's great to ideate, explore and create but the next step is just as
-          important: we need to track their progress. Here, we create individual
-          mind maps and student portfolios to make sure that all their learning
-          is tracked and collected which will allow the child to assess
-          themselves more holistically and not just from a mark sheet!
-        </div>
-        <div className="text-orange-600 text-[2rem] mt-20">
-          c r e a
-          <span className="px-3.5 mx-1 bg-orange-100 rounded-full">t</span> e
+      <div className="flex items-center justify-center h-full w-full">
+        <div className="text-[15rem] text-white font-semibold relative">
+          CREATE
+          <span
+            className="absolute inset-0 bg-orange-500 rounded-full"
+            style={{ clipPath: "circle(18% at 70% 50%)" }}
+          ></span>
         </div>
       </div>
     ),
@@ -161,23 +130,18 @@ const sections = [
   {
     backgroundColor: "#FF6B00",
     content: (
-      <div className="flex items-center flex-col w-[80%]">
-        <div className="text-[6rem] text-center text-white font-semibold">
-          Evaluate
-        </div>
-        <div className="text-[2rem] text-center text-white font-semibold">
-          At the end, we need create an opportunity for children to reflect on
-          their entire learning process. This includes reflecting on their
-          approach towards the problem statement, reflecting on what could be
-          more effective and just pondering what could be the next steps!
-        </div>
-        <div className="text-white text-[2rem] mt-20">
-          c r e a t
-          <span className="px-3 mx-1 bg-purple-400 rounded-full">e</span>
+      <div className="flex items-center justify-center h-full w-full">
+        <div className="text-[15rem] text-white font-semibold relative">
+          CREATE
+          <span
+            className="absolute inset-0 bg-purple-500 rounded-full"
+            style={{ clipPath: "circle(18% at 85% 50%)" }}
+          ></span>
         </div>
       </div>
     ),
   },
+
   {
     backgroundColor: "#B686B8",
     content: (
