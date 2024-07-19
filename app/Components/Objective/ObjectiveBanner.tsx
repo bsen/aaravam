@@ -69,76 +69,6 @@ const sections = [
       </div>
     ),
   },
-  {
-    backgroundColor: "#FF6B00",
-    content: (
-      <div className="flex items-center justify-center h-full w-full">
-        <div className="text-[15rem] text-white font-semibold relative">
-          CREATE
-          <span
-            className="absolute inset-0 bg-purple-500 rounded-full"
-            style={{ clipPath: "circle(18% at 25% 50%)" }}
-          ></span>
-        </div>
-      </div>
-    ),
-  },
-  {
-    backgroundColor: "#452E2E",
-    content: (
-      <div className="flex items-center justify-center h-full w-full">
-        <div className="text-[15rem] text-white font-semibold relative">
-          CREATE
-          <span
-            className="absolute inset-0 bg-orange-500 rounded-full"
-            style={{ clipPath: "circle(18% at 40% 50%)" }}
-          ></span>
-        </div>
-      </div>
-    ),
-  },
-  {
-    backgroundColor: "#FF6B00",
-    content: (
-      <div className="flex items-center justify-center h-full w-full">
-        <div className="text-[15rem] text-white font-semibold relative">
-          CREATE
-          <span
-            className="absolute inset-0 bg-purple-500 rounded-full"
-            style={{ clipPath: "circle(18% at 55% 50%)" }}
-          ></span>
-        </div>
-      </div>
-    ),
-  },
-  {
-    backgroundColor: "#452E2E",
-    content: (
-      <div className="flex items-center justify-center h-full w-full">
-        <div className="text-[15rem] text-white font-semibold relative">
-          CREATE
-          <span
-            className="absolute inset-0 bg-orange-500 rounded-full"
-            style={{ clipPath: "circle(18% at 70% 50%)" }}
-          ></span>
-        </div>
-      </div>
-    ),
-  },
-  {
-    backgroundColor: "#FF6B00",
-    content: (
-      <div className="flex items-center justify-center h-full w-full">
-        <div className="text-[15rem] text-white font-semibold relative">
-          CREATE
-          <span
-            className="absolute inset-0 bg-purple-500 rounded-full"
-            style={{ clipPath: "circle(18% at 85% 50%)" }}
-          ></span>
-        </div>
-      </div>
-    ),
-  },
 
   {
     backgroundColor: "#B686B8",
@@ -195,7 +125,10 @@ const ObjectiveBanner = () => {
   };
 
   return (
-    <div ref={containerRef} className="h-screen overflow-y-auto scroll-smooth">
+    <div
+      ref={containerRef}
+      className="h-screen -mt-10 overflow-y-auto scroll-smooth"
+    >
       {sections.map((section, index) => (
         <div
           key={index}

@@ -59,26 +59,26 @@ const Page = () => {
         <HeroStudentsGalary />
         <HeroScroll />
         <Partner />
+        <AboutBanner />,
+        <WhatBanner />,
+        <WhatData />,
         <div
           ref={containerRef}
           className="h-screen overflow-y-auto scroll-smooth"
         >
-          {[
-            <AboutBanner key="aboutBanner" />,
-            <WhatBanner key="whatBanner" />,
-            <WhatData key="whatData" />,
-            <ObjectiveBanner key="objectiveBanner" />,
-          ].map((Component, index) => (
-            <div
-              key={index}
-              ref={(el) => {
-                sectionRefs.current[index] = el;
-              }}
-              className="min-h-screen sticky top-0"
-            >
-              {Component}
-            </div>
-          ))}
+          {[<ObjectiveBanner key="objectiveBanner" />].map(
+            (Component, index) => (
+              <div
+                key={index}
+                ref={(el) => {
+                  sectionRefs.current[index] = el;
+                }}
+                className="min-h-screen sticky top-0"
+              >
+                {Component}
+              </div>
+            )
+          )}
         </div>
       </div>
     </>

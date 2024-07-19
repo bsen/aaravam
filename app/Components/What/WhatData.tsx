@@ -105,7 +105,7 @@ const WhatData: React.FC = () => {
 
   return (
     <div
-      className="h-screen overflow-hidden"
+      className="h-screen -mt-10 overflow-hidden"
       style={{ backgroundColor: "#FDEFDB" }}
     >
       <div

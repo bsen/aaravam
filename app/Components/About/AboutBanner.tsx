@@ -2,7 +2,7 @@ import React from "react";
 
 const AboutBanner = () => {
   return (
-    <div className="overflow-hidden bg-orange-600 h-screen flex items-center justify-center">
+    <div className="overflow-hidden bg-orange-600 -mt-10 h-screen flex items-center justify-center">
       <div className="max-w-[80%] flex flex-col items-center justify-center">
         <div className="text-[7rem] font-semibold text-white">About</div>
         <div className="text-white text-4xl font-semibold text-center">
