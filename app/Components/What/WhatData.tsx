@@ -121,17 +121,6 @@ const WhatData: React.FC = () => {
           />
         ))}
       </div>
-      <div className="absolute bottom-5 left-0 right-0 flex justify-center">
-        {sections.map((_, index) => (
-          <button
-            key={index}
-            className={`mx-2 w-3 h-3 rounded-full ${
-              index === activeIndex ? "bg-white" : "bg-white/50"
-            }`}
-            onClick={() => setActiveIndex(index)}
-          />
-        ))}
-      </div>
     </div>
   );
 };

@@ -79,6 +79,9 @@ const sections = [
         </div>
         <div
           style={{ backgroundColor: "#452E2E" }}
+          onClick={() => {
+            window.open("https://calendly.com/");
+          }}
           className="text-white text-2xl px-4 py-1 rounded-full border-b-2 border-r-2 border-white mt-20"
         >
           contact us
@@ -141,17 +144,6 @@ const ObjectiveBanner = () => {
           {section.content}
         </div>
       ))}
-      <div className="fixed bottom-5 left-0 right-0 flex justify-center">
-        {sections.map((_, index) => (
-          <button
-            key={index}
-            className={`mx-2 w-3 h-3 rounded-full ${
-              index === activeIndex ? "bg-white" : "bg-white/50"
-            }`}
-            onClick={() => scrollToSection(index)}
-          />
-        ))}
-      </div>
     </div>
   );
 };

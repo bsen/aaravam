@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Banner from "./Components/Banner/Banner";
 import HeroStudentsGalary from "./Components/HeroStudents/HeroStudents";
 import HeroScroll from "./Components/HeroStudents/HeroScroll";
@@ -9,7 +9,10 @@ import WhatBanner from "./Components/What/WhatBanner";
 import WhatData from "./Components/What/WhatData";
 import ObjectiveBanner from "./Components/Objective/ObjectiveBanner";
 import CustomCursor from "./Components/CustomCursor";
+import SchoolDataView from "./Components/School/SchoolDataView";
+
 const Page = () => {
+  const [schoolState, setSchoolState] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<Array<HTMLDivElement | null>>([]);
 
@@ -55,31 +58,37 @@ const Page = () => {
     <>
       <CustomCursor />
       <div className="cursor-none">
-        <Banner />,
-        <HeroStudentsGalary />
-        <HeroScroll />
-        <Partner />
-        <AboutBanner />,
-        <WhatBanner />,
-        <WhatData />,
-        <div
-          ref={containerRef}
-          className="h-screen overflow-y-auto scroll-smooth"
-        >
-          {[<ObjectiveBanner key="objectiveBanner" />].map(
-            (Component, index) => (
-              <div
-                key={index}
-                ref={(el) => {
-                  sectionRefs.current[index] = el;
-                }}
-                className="min-h-screen sticky top-0"
-              >
-                {Component}
-              </div>
-            )
-          )}
-        </div>
+        <Banner schoolState={schoolState} setSchoolState={setSchoolState} />
+        {schoolState ? (
+          <SchoolDataView />
+        ) : (
+          <>
+            <HeroStudentsGalary />
+            <HeroScroll />
+            <Partner />
+            <AboutBanner />
+            <WhatBanner />
+            <WhatData />
+            <div
+              ref={containerRef}
+              className="h-screen overflow-y-auto scroll-smooth"
+            >
+              {[<ObjectiveBanner key="objectiveBanner" />].map(
+                (Component, index) => (
+                  <div
+                    key={index}
+                    ref={(el) => {
+                      sectionRefs.current[index] = el;
+                    }}
+                    className="min-h-screen sticky top-0"
+                  >
+                    {Component}
+                  </div>
+                )
+              )}
+            </div>
+          </>
+        )}
       </div>
     </>
   );

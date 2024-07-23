@@ -1,33 +1,50 @@
-"use client";
 import { motion, useAnimationControls } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Header from "../Header"; // Import the Header component
+interface BannerProps {
+  schoolState: boolean;
+  setSchoolState: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const Banner = () => {
-  const controls = useAnimationControls();
+const Banner: React.FC<BannerProps> = ({ schoolState, setSchoolState }) => {
+  const [headerOptions, setHeaderOptions] = useState([
+    "Home",
+    "About",
+    "What",
+    "Objective",
+    "Facilities",
+    "Contact",
+  ]);
+
+  const handleSchoolsClick = () => {
+    setHeaderOptions(["Home", "About", "Cohort", "Contact"]);
+  };
+
+  const handleEducatorsClick = () => {
+    setHeaderOptions([
+      "Home",
+      "About",
+      "What",
+      "Objective",
+      "Facilities",
+      "Contact",
+    ]);
+  };
+  const scrollingTextRef = useRef<HTMLDivElement>(null);
   const [textWidth, setTextWidth] = useState(0);
-
   useEffect(() => {
-    const textElement = document.getElementById("scrollingText");
-    if (textElement) {
-      setTextWidth(textElement.offsetWidth / 2);
+    if (scrollingTextRef.current) {
+      setTextWidth(scrollingTextRef.current.scrollWidth);
     }
   }, []);
 
-  useEffect(() => {
-    if (textWidth) {
-      controls.start({
-        x: -textWidth,
-        transition: {
-          duration: 20,
-          ease: "linear",
-          repeat: Infinity,
-        },
-      });
-    }
-  }, [textWidth, controls]);
-
   return (
     <div className="min-h-screen w-full bg-orange-600 overflow-y-auto">
+      <Header
+        options={headerOptions}
+        onSchoolsClick={handleSchoolsClick}
+        onEducatorsClick={handleEducatorsClick}
+      />
       <div className="min-h-screen w-full flex flex-col justify-between items-center px-4 py-8 md:py-12">
         <div></div>
         <div className="flex flex-col gap-6 items-center justify-center w-full">
@@ -35,10 +52,28 @@ const Banner = () => {
             style={{ backgroundColor: "#452E2E" }}
             className="p-2 text-white gap-2 font-medium rounded-full flex justify-center items-center"
           >
-            <div className="px-2 py-0.5 bg-orange-600 rounded-full">
+            <button
+              className={`px-2 py-0.5  rounded-full ${
+                schoolState ? "" : "bg-orange-600"
+              }`}
+              onClick={() => {
+                handleEducatorsClick();
+                setSchoolState(false);
+              }}
+            >
               Educators
-            </div>
-            <div className="px-2 py-0.5  rounded-full">Schools</div>
+            </button>
+            <button
+              className={`px-2 py-0.5  rounded-full ${
+                schoolState ? "bg-orange-600" : " "
+              }`}
+              onClick={() => {
+                handleSchoolsClick();
+                setSchoolState(true);
+              }}
+            >
+              Schools
+            </button>
           </div>
           <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center">
             <img
@@ -108,7 +143,14 @@ const Banner = () => {
           <motion.div
             id="scrollingText"
             className="text-5xl font-semibold text-white inline-block"
-            animate={controls}
+            animate={{
+              x: -textWidth,
+              transition: {
+                duration: 20,
+                ease: "linear",
+                repeat: Infinity,
+              },
+            }}
           >
             <span className="inline-block">
               A space where <span className="text-indigo-300">children</span>{" "}
