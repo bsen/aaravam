@@ -1,34 +1,10 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 
-interface SectionProps {
-  title: string;
-  content: string;
-}
-
-const Section: React.FC<SectionProps> = ({ title, content }) => (
-  <div className="w-screen h-screen flex-shrink-0 flex flex-col items-center justify-center px-20">
-    <div className="max-w-4xl w-full">
-      <h2
-        style={{ color: "#3F2E2C" }}
-        className="text-center text-6xl font-semibold mb-8"
-      >
-        {title}
-      </h2>
-      <p
-        style={{ color: "#3F2E2C" }}
-        className="text-2xl font-medium text-center"
-      >
-        {content}
-      </p>
-    </div>
-  </div>
-);
-
 const WhatData: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const isTransitioning = useRef(false);
+  const autoScrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const isUserScrollingRef = useRef(false);
 
   const sections = [
     {
@@ -52,73 +28,102 @@ const WhatData: React.FC = () => {
         "Children have the gift of imagination and we believe we can make the most of it, if we give them the tools and space to express it! Our core focus is on innovation because we don't want children to just repeat what's in the textbook but we want them to be able to make sense of everything they are learning in school and then create something! That's when learning becomes impactful!",
     },
   ];
+  const startAutoScroll = () => {
+    if (autoScrollIntervalRef.current) return;
+
+    autoScrollIntervalRef.current = setInterval(() => {
+      if (scrollContainerRef.current && !isUserScrollingRef.current) {
+        const maxScroll =
+          scrollContainerRef.current.scrollWidth -
+          scrollContainerRef.current.clientWidth;
+        const newScrollPosition =
+          (scrollContainerRef.current.scrollLeft + 1) % maxScroll;
+        scrollContainerRef.current.scrollTo({
+          left: newScrollPosition,
+          behavior: "auto",
+        });
+      }
+    }, 50);
+  };
+
+  const stopAutoScroll = () => {
+    if (autoScrollIntervalRef.current) {
+      clearInterval(autoScrollIntervalRef.current);
+      autoScrollIntervalRef.current = null;
+    }
+  };
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
 
-    const handleWheel = (e: WheelEvent) => {
-      if (isTransitioning.current) return;
-
-      if (
-        (activeIndex === 0 && e.deltaY < 0) ||
-        (activeIndex === sections.length - 1 && e.deltaY > 0)
-      ) {
-        return;
-      }
-
-      e.preventDefault();
-
-      const direction = e.deltaY > 0 ? 1 : -1;
-
-      setActiveIndex((prevIndex) => {
-        const newIndex = prevIndex + direction;
-        if (newIndex >= 0 && newIndex < sections.length) {
-          isTransitioning.current = true;
-          setTimeout(() => {
-            isTransitioning.current = false;
-          }, 800);
-          return newIndex;
-        }
-        return prevIndex;
-      });
+    const handleScroll = () => {
+      const scrollPosition = scrollContainer.scrollLeft;
+      const sectionWidth = scrollContainer.clientWidth;
+      const newIndex = Math.round(scrollPosition / sectionWidth);
     };
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
-        e.preventDefault();
-        const direction = e.key === "ArrowRight" ? 1 : -1;
-        setActiveIndex((prevIndex) => {
-          const newIndex = prevIndex + direction;
-          return Math.max(0, Math.min(newIndex, sections.length - 1));
-        });
-      }
+    const handleUserInteractionStart = () => {
+      isUserScrollingRef.current = true;
+      stopAutoScroll();
     };
 
-    scrollContainer?.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("keydown", handleKeyDown);
+    const handleUserInteractionEnd = () => {
+      isUserScrollingRef.current = false;
+      setTimeout(startAutoScroll, 500); // Resume auto-scroll after 2 seconds
+    };
+
+    scrollContainer.addEventListener("scroll", handleScroll);
+    scrollContainer.addEventListener("touchstart", handleUserInteractionStart);
+    scrollContainer.addEventListener("mousedown", handleUserInteractionStart);
+    scrollContainer.addEventListener("touchend", handleUserInteractionEnd);
+    scrollContainer.addEventListener("mouseup", handleUserInteractionEnd);
+
+    startAutoScroll();
 
     return () => {
-      scrollContainer?.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("keydown", handleKeyDown);
+      scrollContainer.removeEventListener("scroll", handleScroll);
+      scrollContainer.removeEventListener(
+        "touchstart",
+        handleUserInteractionStart
+      );
+      scrollContainer.removeEventListener(
+        "mousedown",
+        handleUserInteractionStart
+      );
+      scrollContainer.removeEventListener("touchend", handleUserInteractionEnd);
+      scrollContainer.removeEventListener("mouseup", handleUserInteractionEnd);
+      stopAutoScroll();
     };
-  }, [sections.length, activeIndex]);
+  }, []);
 
   return (
     <div
-      className="h-screen -mt-10 overflow-hidden"
+      className="-mt-10 overflow-x-auto"
       style={{ backgroundColor: "#FDEFDB" }}
+      ref={scrollContainerRef}
     >
-      <div
-        ref={scrollContainerRef}
-        className="flex transition-transform duration-800 ease-in-out h-full"
-        style={{ transform: `translateX(-${activeIndex * 100}%)` }}
-      >
+      <div className="flex">
         {sections.map((section, index) => (
-          <Section
+          <div
             key={index}
-            title={section.title}
-            content={section.content}
-          />
+            className="w-screen h-screen flex-shrink-0 flex flex-col items-center justify-center px-20"
+          >
+            <div className="max-w-4xl w-full">
+              <h2
+                style={{ color: "#3F2E2C" }}
+                className="text-center text-6xl font-semibold mb-8"
+              >
+                {section.title}
+              </h2>
+              <p
+                style={{ color: "#3F2E2C" }}
+                className="text-2xl font-medium text-center"
+              >
+                {section.content}
+              </p>
+            </div>
+          </div>
         ))}
       </div>
     </div>
