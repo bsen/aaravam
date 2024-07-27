@@ -2,9 +2,9 @@
 import React, { useRef, useEffect, useState } from "react";
 
 const WhatData: React.FC = () => {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const autoScrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const isUserScrollingRef = useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [currentSection, setCurrentSection] = useState(0);
+  const [allowVerticalScroll, setAllowVerticalScroll] = useState(false);
 
   const sections = [
     {
@@ -28,80 +28,65 @@ const WhatData: React.FC = () => {
         "Children have the gift of imagination and we believe we can make the most of it, if we give them the tools and space to express it! Our core focus is on innovation because we don't want children to just repeat what's in the textbook but we want them to be able to make sense of everything they are learning in school and then create something! That's when learning becomes impactful!",
     },
   ];
-  const startAutoScroll = () => {
-    if (autoScrollIntervalRef.current) return;
-
-    autoScrollIntervalRef.current = setInterval(() => {
-      if (scrollContainerRef.current && !isUserScrollingRef.current) {
-        const maxScroll =
-          scrollContainerRef.current.scrollWidth -
-          scrollContainerRef.current.clientWidth;
-        const newScrollPosition =
-          (scrollContainerRef.current.scrollLeft + 1) % maxScroll;
-        scrollContainerRef.current.scrollTo({
-          left: newScrollPosition,
-          behavior: "auto",
-        });
-      }
-    }, 50);
-  };
-
-  const stopAutoScroll = () => {
-    if (autoScrollIntervalRef.current) {
-      clearInterval(autoScrollIntervalRef.current);
-      autoScrollIntervalRef.current = null;
-    }
-  };
 
   useEffect(() => {
-    const scrollContainer = scrollContainerRef.current;
-    if (!scrollContainer) return;
+    const container = containerRef.current;
+    if (!container) return;
 
-    const handleScroll = () => {
-      const scrollPosition = scrollContainer.scrollLeft;
-      const sectionWidth = scrollContainer.clientWidth;
-      const newIndex = Math.round(scrollPosition / sectionWidth);
+    let scrollTimeout: NodeJS.Timeout | null = null;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+
+      scrollTimeout = setTimeout(() => {
+        if (!allowVerticalScroll) {
+          e.preventDefault();
+          if (e.deltaY > 0) {
+            // Scrolling down
+            if (currentSection < sections.length - 1) {
+              setCurrentSection((prev) => prev + 1);
+            } else {
+              setAllowVerticalScroll(true);
+            }
+          } else {
+            // Scrolling up
+            if (currentSection > 0) {
+              setCurrentSection((prev) => prev - 1);
+            }
+          }
+        }
+      }, 50); // Debounce scroll events
     };
 
-    const handleUserInteractionStart = () => {
-      isUserScrollingRef.current = true;
-      stopAutoScroll();
-    };
-
-    const handleUserInteractionEnd = () => {
-      isUserScrollingRef.current = false;
-      setTimeout(startAutoScroll, 1000); // Resume auto-scroll after 2 seconds
-    };
-
-    scrollContainer.addEventListener("scroll", handleScroll);
-    scrollContainer.addEventListener("touchstart", handleUserInteractionStart);
-    scrollContainer.addEventListener("mousedown", handleUserInteractionStart);
-    scrollContainer.addEventListener("touchend", handleUserInteractionEnd);
-    scrollContainer.addEventListener("mouseup", handleUserInteractionEnd);
-
-    startAutoScroll();
+    container.addEventListener("wheel", handleWheel, { passive: false });
 
     return () => {
-      scrollContainer.removeEventListener("scroll", handleScroll);
-      scrollContainer.removeEventListener(
-        "touchstart",
-        handleUserInteractionStart
-      );
-      scrollContainer.removeEventListener(
-        "mousedown",
-        handleUserInteractionStart
-      );
-      scrollContainer.removeEventListener("touchend", handleUserInteractionEnd);
-      scrollContainer.removeEventListener("mouseup", handleUserInteractionEnd);
-      stopAutoScroll();
+      container.removeEventListener("wheel", handleWheel);
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
     };
-  }, []);
+  }, [currentSection, allowVerticalScroll, sections.length]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    container.scrollTo({
+      left: currentSection * window.innerWidth,
+      behavior: "smooth",
+    });
+  }, [currentSection]);
 
   return (
     <div
-      className="-mt-10 overflow-x-auto"
+      ref={containerRef}
+      className={`h-screen ${
+        allowVerticalScroll ? "overflow-y-auto" : "overflow-y-hidden"
+      } overflow-x-hidden`}
       style={{ backgroundColor: "#FDEFDB" }}
-      ref={scrollContainerRef}
     >
       <div className="flex">
         {sections.map((section, index) => (
@@ -126,6 +111,12 @@ const WhatData: React.FC = () => {
           </div>
         ))}
       </div>
+      {/* Add your additional components here */}
+      {allowVerticalScroll && (
+        <div className="h-screen flex items-center justify-center bg-blue-200">
+          <h2 className="text-4xl">Additional Content</h2>
+        </div>
+      )}
     </div>
   );
 };
