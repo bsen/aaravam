@@ -70,7 +70,7 @@ const WhatData: React.FC = () => {
 
     const handleUserInteractionEnd = () => {
       isUserScrollingRef.current = false;
-      setTimeout(startAutoScroll, 500); // Resume auto-scroll after 2 seconds
+      setTimeout(startAutoScroll, 1000); // Resume auto-scroll after 2 seconds
     };
 
     scrollContainer.addEventListener("scroll", handleScroll);

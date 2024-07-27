@@ -54,17 +54,13 @@ const sections = [
       </div>
     ),
   },
-
   {
     backgroundColor: "#452E2E",
     content: (
       <div className="flex items-center justify-center h-full w-full">
-        <div className="text-[15rem] text-white font-semibold relative">
-          CREATE
-          <span
-            className="absolute inset-0 bg-orange-500 rounded-full"
-            style={{ clipPath: "circle(18% at 10% 50%)" }}
-          ></span>
+        <div className="text-[15rem] text-white font-semibold relative overflow-hidden">
+          <span className="absolute h-64 w-full top-1/2 -translate-y-1/2 bg-orange-500 animate-move-circle rounded-full"></span>
+          <span className="relative z-10">CREATE</span>
         </div>
       </div>
     ),
@@ -147,5 +143,4 @@ const ObjectiveBanner = () => {
     </div>
   );
 };
-
 export default ObjectiveBanner;
